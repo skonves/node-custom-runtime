@@ -8,10 +8,10 @@ COPY ./node_runtime.js /tmp/
 RUN yum install which tar gzip zip -y && \
 ##
 ## Install nvm
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash && \
-. ~/.nvm/nvm.sh && \
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
 ##
 ## Install specified version of Node
+RUN . ~/.nvm/nvm.sh && \
 nvm install $NODE_VERSION && \
 export INSTALLED_NODE_VERISON=`node --version` && \
 ##

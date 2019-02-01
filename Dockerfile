@@ -27,12 +27,16 @@ echo "/opt/node-$INSTALLED_NODE_VERISON-linux-x64/bin/node /opt/node_runtime.js"
 echo "" >> bootstrap && \
 chmod 755 bootstrap && \
 ##
-## Fix npm symlinks
+## Remove npm symlinks
 unlink /tmp/node-$INSTALLED_NODE_VERISON-linux-x64/bin/npm && \
 unlink /tmp/node-$INSTALLED_NODE_VERISON-linux-x64/lib/node_modules/npm/bin/npm && \
-cd /tmp/node-$INSTALLED_NODE_VERISON-linux-x64/bin && \
-ln -s ../lib/node_modules/npm/bin/npm-cli.js ./npm && \
+##
+## Create script to run npm-cli.js
+echo "/opt/node-$INSTALLED_NODE_VERISON-linux-x64/lib/node_modules/npm/bin/npm-cli.js \"\$@\"" > /tmp/node-$INSTALLED_NODE_VERISON-linux-x64/bin/npm && \
+chmod 755 /tmp/node-$INSTALLED_NODE_VERISON-linux-x64/bin/npm && \
+##
+## Clean up
+rm -rf npm-* && \
 ##
 ## Roll artifact
-cd /tmp && \
 zip -r runtime.zip *
